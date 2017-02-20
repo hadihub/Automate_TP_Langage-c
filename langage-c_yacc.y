@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-void yyerror (char *s) ;
+void yyerror (char *s);
 %}
 
 %token tMain
@@ -25,16 +25,16 @@ void yyerror (char *s) ;
 %token tDoubleEgal
 %token tConst
 %token tPrintf
-%token tNombre
+%token tEntier
 %token tId
 
 %start start
 
 %%
 
-start		: Prosudog
+start		: Prog
 
-Prog		: Fonctions
+Prog		: Fonctions	{printf("Prog detected\n");}
 
 Fonctions	: %empty
 		| Fonction Fonctions
@@ -75,6 +75,8 @@ ExprArith 	: ExprArith tPlus  ExprArith
 		| ExprArith tOu ExprArith
 		| ExprArith tEt  ExprArith
 		| ExprArith tDoubleEgal  ExprArith
+		| tId
+		| tEntier
 
 If		: tIf tPo ExprArith tPf Body
 		| tIf tPo ExprArith tPf Body tElse Body
@@ -83,16 +85,17 @@ While		: tWhile tPo ExprArith tPf Body
 
 Affect		: tId tEgal ExprArith tPvir
 
-Dec		: tInt Dec DecN tPvir
-
-Dec1		: tId
-		| tId tEgal ExprArith
+Dec		: tInt Dec1 tPvir
+		| tInt DecN tPvir
 
 DecN		: Dec1
 		| Dec1 tVir DecN
 
+Dec1		: tId
+		| tId tEgal ExprArith
+
 %%
 
-void main(void) {yyparse();}
+int main(void) {return yyparse();}
 
 void yyerror(char *s) {printf("Erreur : %s", s);}
