@@ -28,18 +28,18 @@ void yyerror (char *s);
 %token tEntier
 %token tId
 
-%start start
+%start Start
 
 %%
 
-start		: Prog
+Start		: Prog
 
 Prog		: Fonctions	{printf("Prog detected\n");}
 
 Fonctions	: %empty
-		| Fonction Fonctions
+                    | Fonction Fonctions
 
-Fonction	: tInt tId tPo Args tPf Body
+Fonction	: tInt tId tPo Args tPf Body 
 
 Args		: %empty
 		| tInt tId ListArgs
@@ -68,7 +68,7 @@ ListParams 	: Param
 
 Param		: ExprArith
 
-ExprArith 	: ExprArith tPlus  ExprArith
+ExprArith	: ExprArith tPlus  ExprArith
 		| ExprArith tMoin  ExprArith
 		| ExprArith tFois  ExprArith
 		| ExprArith tDivise  ExprArith
@@ -85,7 +85,7 @@ While		: tWhile tPo ExprArith tPf Body
 
 Affect		: tId tEgal ExprArith tPvir
 
-Dec		: tInt Dec1 tPvir
+Dec		: tInt Dec1 tPvir	{
 		| tInt DecN tPvir
 
 DecN		: Dec1

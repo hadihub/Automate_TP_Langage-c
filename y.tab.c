@@ -486,7 +486,7 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "tMain", "tIf", "tElse", "tWhile", "tAo",
   "tAf", "tPo", "tPf", "tVir", "tPvir", "tEgal", "tDivise", "tMoin",
   "tPlus", "tFois", "tReturn", "tInt", "tEt", "tOu", "tDoubleEgal",
-  "tConst", "tPrintf", "tEntier", "tId", "$accept", "start", "Prog",
+  "tConst", "tPrintf", "tEntier", "tId", "$accept", "Start", "Prog",
   "Fonctions", "Fonction", "Args", "ListArgs", "Body", "Instructions",
   "Invoc", "Params", "ListParams", "Param", "ExprArith", "If", "While",
   "Affect", "Dec", "DecN", "Dec1", YY_NULLPTR
