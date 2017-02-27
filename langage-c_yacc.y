@@ -27,8 +27,9 @@ void yyerror (char *s);
 %token tPrintf
 %token tEntier
 %token tId
-
 %start Start
+%left  tMoin tPlus
+%left  tFois tDivise
 
 %%
 
@@ -37,7 +38,7 @@ Start		: Prog
 Prog		: Fonctions	{printf("Prog detected\n");}
 
 Fonctions	: %empty
-                    | Fonction Fonctions
+                | Fonction Fonctions
 
 Fonction	: tInt tId tPo Args tPf Body 
 
