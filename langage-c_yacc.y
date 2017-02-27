@@ -1,7 +1,9 @@
 %{
 #include <stdio.h>
+#include "table-symboles.h"
 void yyerror (char *s);
 %}
+
 
 %token tMain
 %token tIf
@@ -86,7 +88,7 @@ While		: tWhile tPo ExprArith tPf Body
 
 Affect		: tId tEgal ExprArith tPvir
 
-Dec		: tInt Dec1 tPvir	{
+Dec		: tInt Dec1 tPvir	
 		| tInt DecN tPvir
 
 DecN		: Dec1

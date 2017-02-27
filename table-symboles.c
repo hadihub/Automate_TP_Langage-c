@@ -1,27 +1,22 @@
-#include <stdio>
-#include "table_symbole.h"
+#include <stdio.h>
+#include <string.h>
+#include "table-symboles.h"
+
+sSymbole_t symbole[TABLE_MAX_SIZE];
+int gIndex = 0;
+int gLvl = 0;
 
 
-sSymbole_t new_symbole_table(int size)
+void load_symbole(char* id)
 {
-	sSymbole_t new_table[size];	
-	
-	for (i < TABLE_MAX_SIZE)
-		if new_table.id[i] = "";
-
-	return new_table;        
-}
-
-void load_symbole(sSymbole_t symbole[TABLE_MAX_SIZE], char id[16])
-{
-	symbole.id[gIndex] = id;
-	symbole.lvl = gLvl;
+	strncpy(symbole[gIndex].id, id, 16);
+	symbole[gIndex].lvl = gLvl;
 	gIndex++;
 }
 
-void free_symbole(sSymbole_t symbole[TABLE_MAX_SIZE], char id[16])
+void free_symbole(char* id)
 {
-	for (i < TABLE_MAX_SIZE)
-		if symbole.id[i] = id
-			symbole.id[i] = "";	
+	for (int i = 0; i < TABLE_MAX_SIZE; i++)
+		if (!strcmp(symbole[i].id, id))
+			symbole[i].id[0] = '\0';
 }

@@ -1,11 +1,7 @@
-#ifndef TABLE-SYMBOLES_H
-#define TABLE-SYMBOLES_H
-#endif
+#ifndef TABLE_SYMBOLES_H
+#define TABLE_SYMBOLES_H
 
 #define TABLE_MAX_SIZE 1024
-
-int gIndex = 0;
-int gLvl = 0;
 
 typedef	struct
 {
@@ -14,10 +10,10 @@ typedef	struct
 }sSymbole_t;
 
 
-sSymbole_t new_symbole_table(int size)
 
-void load_symbole(sSymbole_t symbole[TABLE_MAX_SIZE], char id[16])
+void load_symbole(char* id);
 
 
-void free_symbole(sSymbole_t symbole[TABLE_MAX_SIZE], char id[16])
+void free_symbole(char* id);
 
+#endif

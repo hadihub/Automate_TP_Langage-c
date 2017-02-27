@@ -15,10 +15,10 @@ State 16 conflicts: 4 shift/reduce
 State 23 conflicts: 5 shift/reduce
 State 34 conflicts: 1 shift/reduce
 State 38 conflicts: 4 shift/reduce, 5 reduce/reduce
-State 68 conflicts: 7 shift/reduce
-State 69 conflicts: 7 shift/reduce
-State 70 conflicts: 7 shift/reduce
-State 71 conflicts: 7 shift/reduce
+State 68 conflicts: 3 shift/reduce
+State 69 conflicts: 3 shift/reduce
+State 70 conflicts: 3 shift/reduce
+State 71 conflicts: 3 shift/reduce
 State 72 conflicts: 7 shift/reduce
 State 73 conflicts: 7 shift/reduce
 State 74 conflicts: 7 shift/reduce
@@ -887,18 +887,10 @@ State 68
    30          | ExprArith . tEt ExprArith
    31          | ExprArith . tDoubleEgal ExprArith
 
-    tDivise      shift, and go to state 53
-    tMoin        shift, and go to state 54
-    tPlus        shift, and go to state 55
-    tFois        shift, and go to state 56
     tEt          shift, and go to state 57
     tOu          shift, and go to state 58
     tDoubleEgal  shift, and go to state 59
 
-    tDivise      [reduce using rule 28 (ExprArith)]
-    tMoin        [reduce using rule 28 (ExprArith)]
-    tPlus        [reduce using rule 28 (ExprArith)]
-    tFois        [reduce using rule 28 (ExprArith)]
     tEt          [reduce using rule 28 (ExprArith)]
     tOu          [reduce using rule 28 (ExprArith)]
     tDoubleEgal  [reduce using rule 28 (ExprArith)]
@@ -917,17 +909,11 @@ State 69
    31          | ExprArith . tDoubleEgal ExprArith
 
     tDivise      shift, and go to state 53
-    tMoin        shift, and go to state 54
-    tPlus        shift, and go to state 55
     tFois        shift, and go to state 56
     tEt          shift, and go to state 57
     tOu          shift, and go to state 58
     tDoubleEgal  shift, and go to state 59
 
-    tDivise      [reduce using rule 26 (ExprArith)]
-    tMoin        [reduce using rule 26 (ExprArith)]
-    tPlus        [reduce using rule 26 (ExprArith)]
-    tFois        [reduce using rule 26 (ExprArith)]
     tEt          [reduce using rule 26 (ExprArith)]
     tOu          [reduce using rule 26 (ExprArith)]
     tDoubleEgal  [reduce using rule 26 (ExprArith)]
@@ -946,17 +932,11 @@ State 70
    31          | ExprArith . tDoubleEgal ExprArith
 
     tDivise      shift, and go to state 53
-    tMoin        shift, and go to state 54
-    tPlus        shift, and go to state 55
     tFois        shift, and go to state 56
     tEt          shift, and go to state 57
     tOu          shift, and go to state 58
     tDoubleEgal  shift, and go to state 59
 
-    tDivise      [reduce using rule 25 (ExprArith)]
-    tMoin        [reduce using rule 25 (ExprArith)]
-    tPlus        [reduce using rule 25 (ExprArith)]
-    tFois        [reduce using rule 25 (ExprArith)]
     tEt          [reduce using rule 25 (ExprArith)]
     tOu          [reduce using rule 25 (ExprArith)]
     tDoubleEgal  [reduce using rule 25 (ExprArith)]
@@ -974,18 +954,10 @@ State 71
    30          | ExprArith . tEt ExprArith
    31          | ExprArith . tDoubleEgal ExprArith
 
-    tDivise      shift, and go to state 53
-    tMoin        shift, and go to state 54
-    tPlus        shift, and go to state 55
-    tFois        shift, and go to state 56
     tEt          shift, and go to state 57
     tOu          shift, and go to state 58
     tDoubleEgal  shift, and go to state 59
 
-    tDivise      [reduce using rule 27 (ExprArith)]
-    tMoin        [reduce using rule 27 (ExprArith)]
-    tPlus        [reduce using rule 27 (ExprArith)]
-    tFois        [reduce using rule 27 (ExprArith)]
     tEt          [reduce using rule 27 (ExprArith)]
     tOu          [reduce using rule 27 (ExprArith)]
     tDoubleEgal  [reduce using rule 27 (ExprArith)]
