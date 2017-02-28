@@ -1,0 +1,7 @@
+*.dot
+*.o
+*.yy.c
+*.output
+*.tab.*
+compilator
+
