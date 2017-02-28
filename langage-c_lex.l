@@ -4,6 +4,7 @@
 
 %%
 
+
 "if"		{return tIf;}
 "else"		{return tElse;}
 "while"		{return tWhile;}
@@ -25,7 +26,7 @@
 "&&"		{return tEt;}
 "||"		{return tOu;}
 [ |\t|\n]	{}		
-[0-9]+ 		{return tEntier;}/*Ajouter la forme exponentielle*/
+[0-9]+ 		{return tEntier; /*Ajouter la forme exponentielle*/ }
 [a-z|A-Z|0-9]*	{return tId;}
 
 %%

@@ -8,8 +8,8 @@ y.output y.dot y.tab.h y.tab.c: langage-c_yacc.y
 lex.yy.c: langage-c_lex.l y.tab.h
 	lex langage-c_lex.l
 
-compilator: lex.yy.o y.tab.o table-symboles.o
-	$(CC) -o compilator lex.yy.o y.tab.o table-symboles.o
+compilator: lex.yy.o y.tab.o table-symboles.o traduction-asm.o
+	$(CC) -o compilator lex.yy.o y.tab.o table-symboles.o traduction-asm.o
 
 clean:
 	rm *.o

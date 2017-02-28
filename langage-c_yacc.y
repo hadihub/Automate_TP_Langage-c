@@ -4,6 +4,7 @@
 void yyerror (char *s);
 %}
 
+%union {int nb; char *str; /*apparemment, c'est obligatoire... (pas testé sans)*/}
 
 %token tMain
 %token tIf
@@ -40,9 +41,9 @@ Start		: Prog
 Prog		: Fonctions	{printf("Prog detected\n");}
 
 Fonctions	: %empty
-                | Fonction Fonctions
+		| Fonction Fonctions
 
-Fonction	: tInt tId tPo Args tPf Body 
+Fonction	: tInt tId tPo Args tPf Body	{printf("Fonction detected\n");}
 
 Args		: %empty
 		| tInt tId ListArgs
@@ -50,17 +51,18 @@ Args		: %empty
 ListArgs	: %empty	 
 		| tVir tInt tId ListArgs
 
-Body		: tAo Instructions tAf
+Body		: tAo Instructions tAf 	{printf("Body detected\n");}
 
 Instructions	: %empty
-		| Instructions Instructions
-		| Dec
+		| Instruction Instructions  	{printf("Instr detected\n");}
+
+Instruction	: Dec
 		| If
 		| While
-		| Affect
+		| Affect 	{printf("Affect detected\n");}
 		| Invoc
 
-Invoc		: tId tPo Params tPf tPvir
+Invoc		: tId tPo Params tPf tPvir	{printf("Trouvé invocation\n");}
 
 Params		: %empty
 		| Param
@@ -69,10 +71,10 @@ Params		: %empty
 ListParams 	: Param
 		| Param tVir ListParams
 
-Param		: ExprArith
+Param		: ExprArith {printf("Trouvé paramètre\n");}
 
-ExprArith	: ExprArith tPlus  ExprArith
-		| ExprArith tMoin  ExprArith
+ExprArith 	: ExprArith tPlus  ExprArith  {printf("Trouvé expression arithmétique plus\n");}
+		| ExprArith tMoin  ExprArith {printf("Trouvé expression arithmétique moins\n");}
 		| ExprArith tFois  ExprArith
 		| ExprArith tDivise  ExprArith
 		| ExprArith tOu ExprArith
@@ -81,17 +83,17 @@ ExprArith	: ExprArith tPlus  ExprArith
 		| tId
 		| tEntier
 
-If		: tIf tPo ExprArith tPf Body
+If		: tIf tPo ExprArith tPf Body {printf("Trouvé if\n");}
 		| tIf tPo ExprArith tPf Body tElse Body
 
-While		: tWhile tPo ExprArith tPf Body
+While		: tWhile tPo ExprArith tPf Body {printf("Trouvé while\n");}
 
-Affect		: tId tEgal ExprArith tPvir
+Affect		: tId tEgal ExprArith tPvir  {printf("Trouvé affectation\n");}
 
-Dec		: tInt Dec1 tPvir	
-		| tInt DecN tPvir
+Dec		: tInt Dec1 tPvir {printf("Trouvé declaration type 1\n");}
+		| tInt DecN tPvir {printf("Trouvé declaration type 2\n");}
 
-DecN		: Dec1
+DecN		: Dec1 {printf("trouvé DecN\n");}
 		| Dec1 tVir DecN
 
 Dec1		: tId
