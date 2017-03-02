@@ -2,6 +2,7 @@
 #include <string.h>
 #include "table-symboles.h"
 //cf le .h pour d'avantage de commentaires
+//test de contribution
 
 sSymbole_t symbole[TABLE_MAX_SIZE];
 
