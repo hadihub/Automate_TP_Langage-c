@@ -1,6 +1,7 @@
 int main(int a)
 {
 	int decl, bla ;
+	int lemfjk = 42 ;
 
 	a = 1 + 3 ;
 	b = a + 5 ;

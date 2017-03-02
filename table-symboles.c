@@ -4,26 +4,47 @@
 //cf le .h pour d'avantage de commentaires
 //test de contribution
 
-sSymbole_t symbole[TABLE_MAX_SIZE];
+static sSymbole_t symbole[TABLE_MAX_SIZE]; //ici, static = privé
 
 /*************** Fonctions publiques ***************/
 
-void load_variable_declaree(char* id)
+void init_table_symbole()
+{
+	int i ;
+	printf("mlgjkz\n") ;
+
+	for (i = 0; i < TABLE_MAX_SIZE ; i++)
+	{
+		symbole[i].id[0] = '\0';
+	}
+}
+
+int load_variable_declaree(char* id)
 {
 	int i, gIndex ;
 	int trouve = 0 ;
+	printf("%s\n", id) ;
+	
+	//tester si l'id est trop long
+	if (strlen(id) >= ID_MAX_LENGTH)
+	{
+		printf("id trop long !\n") ;
+		return -1 ;
+	}
 
 	//commencer par chercher le premier espace libre
 	for (i = 0; (i < TABLE_MAX_SIZE && !trouve) ; i++)
 	{
-		if (!strcmp(symbole[i].id, "")) //si l'id est une chaîne vide, l'emplacement est libre
+		if (symbole[i].id[0] == '\0') //si l'id est une chaîne vide, l'emplacement est libre
 		{
 			gIndex = i ;
 			trouve = 1 ;
 		}
 	}
-	strncpy(symbole[gIndex].id, id, 16) ;
+	strcpy(symbole[gIndex].id, id) ;
 	symbole[gIndex].lvl = -1 ;
+
+	return 0 ;
 }
 
 /* ajoute les variables temporaires en commençant par la fin du tableau
@@ -33,7 +54,7 @@ int load_variable_temporaire(int num)
 {
 	if (!strcmp(symbole[TABLE_MAX_SIZE - num].id, ""))
 	{
-		strncpy(symbole[TABLE_MAX_SIZE - num].id, "temporaire", 16) ;
+		strncpy(symbole[TABLE_MAX_SIZE - num].id, "temporaire", ID_MAX_LENGTH) ;
 		return 0 ;
 	}
 	else
@@ -60,6 +81,7 @@ void set_init(char* id)
 	
 }
 
+//TODO : Pas supprimer par id, mais par profondeur
 void free_symbole(char* id)
 {
 	int i ;
@@ -74,3 +96,20 @@ void free_symbole(char* id)
 		}
 	}
 }
+
+void affiche_table_symboles () 
+{
+	int i ;
+
+	for (i=0 ; (i < TABLE_MAX_SIZE && symbole[i].id[0] != '\0') ; i++)
+	{
+		printf("numéro %d : %s\n", i, symbole[i].id) ;
+	}
+}
+
+
+
+
+
+
+

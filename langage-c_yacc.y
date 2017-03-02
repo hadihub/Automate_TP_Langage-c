@@ -4,7 +4,7 @@
 void yyerror (char *s);
 %}
 
-%union {int nb; char *str; /*apparemment, c'est obligatoire... (pas testé sans)*/}
+%union {int nb; char str[ID_MAX_LENGTH]; /*déclaration des types à associer aux tokens*/}
 
 %token tMain
 %token tIf
@@ -28,8 +28,8 @@ void yyerror (char *s);
 %token tDoubleEgal
 %token tConst
 %token tPrintf
-%token tEntier
-%token tId
+%token <nb> tEntier
+%token <str> tId
 %start Start
 %left  tMoin tPlus
 %left  tFois tDivise
@@ -38,7 +38,7 @@ void yyerror (char *s);
 
 Start		: Prog
 
-Prog		: Fonctions	{printf("Prog detected\n");}
+Prog		: Fonctions	 {printf("Prog detected\n") ; affiche_table_symboles() ;}
 
 Fonctions	: %empty
 		| Fonction Fonctions
@@ -96,11 +96,14 @@ Dec		: tInt Dec1 tPvir {printf("Trouvé declaration type 1\n");}
 DecN		: Dec1 {printf("trouvé DecN\n");}
 		| Dec1 tVir DecN
 
-Dec1		: tId
-		| tId tEgal ExprArith
+Dec1		: tId {printf ("Dec1 trouve : %s.\n", $1) ; load_variable_declaree($1) ;}
+		| tId tEgal ExprArith {printf ("Dec1 + affct trouve : %s.\n", $1) ; load_variable_declaree($1) ;}
 
 %%
 
-int main(void) {return yyparse();}
+int main(void) {
+	init_table_symbole() ;
+	return yyparse();
+}
 
 void yyerror(char *s) {printf("Erreur : %s", s);}

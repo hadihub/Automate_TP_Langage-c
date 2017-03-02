@@ -3,6 +3,7 @@
 #include "table-symboles.h"
 
 int indice_tempo_max = 0 ;
+int instr[TAILLE_MAX_PROG][4] ;
 
 /*************** Fonctions privées ***************/
 

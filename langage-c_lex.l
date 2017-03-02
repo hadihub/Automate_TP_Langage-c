@@ -1,4 +1,5 @@
 %{
+#include "table-symboles.h"
 #include "y.tab.h"
 %}
 
@@ -26,8 +27,8 @@
 "&&"		{return tEt;}
 "||"		{return tOu;}
 [ |\t|\n]	{}		
-[0-9]+ 		{return tEntier; /*Ajouter la forme exponentielle*/ }
-[a-z|A-Z|0-9]*	{return tId;}
+[0-9]+ 		{yylval.nb = atoi(yytext) ; return tEntier ; /*Ajouter la forme exponentielle*/ }
+[a-z|A-Z|0-9]+	{strncpy(yylval.str, yytext, 16) ; return tId ;}
 
 %%
 

@@ -8,11 +8,14 @@ y.output y.dot y.tab.h y.tab.c: langage-c_yacc.y
 lex.yy.c: langage-c_lex.l y.tab.h
 	lex langage-c_lex.l
 
-compilator: lex.yy.o y.tab.o table-symboles.o traduction-asm.o
-	$(CC) -o compilator lex.yy.o y.tab.o table-symboles.o traduction-asm.o
+compilator: table-symboles.o traduction-asm.o lex.yy.o y.tab.o
+	$(CC) -o compilator $^
 
 clean:
 	rm *.o
+	rm lex.yy.c
+	rm y.tab.c
+	rm y.tab.h
 
 test: compilator
 	./compilator < input
