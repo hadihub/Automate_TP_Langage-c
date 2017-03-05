@@ -1,8 +1,13 @@
 int main(int a)
 {
-	int decl, bla ;
-	int lemfjk = 42 ;
+	if (caca == 1)
+	{
+		int A, B;
+	}
 
-	a = 1 + 3 ;
-	b = a + 5 ;
+	int C, D ;
+	int Num = 42 ;
+
+	Z = 1 + 3 ;
+	X = a + 5 ;
 }

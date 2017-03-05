@@ -2,106 +2,107 @@
 #include <stdio.h>
 #include "table-symboles.h"
 void yyerror (char *s);
+int gLvl = 0; // variable global qui retient le niveau de profondeur
 %}
 
 %union {int nb; char str[ID_MAX_LENGTH]; /*déclaration des types à associer aux tokens*/}
 
-%token tMain
-%token tIf
-%token tElse
-%token tWhile
-%token tAo
-%token tAf
-%token tPo
-%token tPf
-%token tVir
-%token tPvir
-%token tEgal
-%token tDivise
-%token tMoin
-%token tPlus
-%token tFois
-%token tReturn
-%token tInt
-%token tEt
-%token tOu
-%token tDoubleEgal
-%token tConst
-%token tPrintf
-%token <nb> tEntier
-%token <str> tId
-%start Start
-%left  tMoin tPlus
-%left  tFois tDivise
+%token	tMain
+%token  tIf
+%token  tElse
+%token  tWhile
+%token  tAo
+%token  tAf
+%token  tPo
+%token  tPf
+%token  tVir
+%token  tPvir
+%token  tEgal
+%token  tDivise
+%token  tMoin
+%token  tPlus
+%token  tFois
+%token  tReturn
+%token  tInt
+%token  tEt
+%token  tOu
+%token  tDoubleEgal
+%token  tConst
+%token  tPrintf
+%token  <nb> tEntier
+%token  <str> tId
+%start  Start
+%left   tMoin tPlus
+%left   tFois tDivise
 
 %%
 
 Start		: Prog
 
-Prog		: Fonctions	 {printf("Prog detected\n") ; affiche_table_symboles() ;}
+Prog		: Fonctions {printf("Prog detected\n"); affiche_table_symboles();}
 
 Fonctions	: %empty
-		| Fonction Fonctions
+            | Fonction Fonctions
 
-Fonction	: tInt tId tPo Args tPf Body	{printf("Fonction detected\n");}
-
+Fonction	: tInt tId tPo Args tPf Body 
 Args		: %empty
-		| tInt tId ListArgs
+            | tInt tId ListArgs
 
 ListArgs	: %empty	 
-		| tVir tInt tId ListArgs
+            | tVir tInt tId ListArgs
 
-Body		: tAo Instructions tAf 	{printf("Body detected\n");}
+Body		: tAo {gLvl++;} Instructions tAf {gLvl--; affiche_table_symboles(); free_symbole(gLvl+1);}
 
 Instructions	: %empty
-		| Instruction Instructions  	{printf("Instr detected\n");}
+                | Instruction Instructions 
 
-Instruction	: Dec
-		| If
-		| While
-		| Affect 	{printf("Affect detected\n");}
-		| Invoc
+Instruction	    : Dec
+                | If
+                | While
+                | Affect 
+                | Invoc
 
-Invoc		: tId tPo Params tPf tPvir	{printf("Trouvé invocation\n");}
+Invoc		: tId tPo Params tPf tPvir	
 
 Params		: %empty
-		| Param
-		| Param tVir ListParams
+            | Param
+            | Param tVir ListParams
 
 ListParams 	: Param
-		| Param tVir ListParams
+            | Param tVir ListParams
 
-Param		: ExprArith {printf("Trouvé paramètre\n");}
+Param		: ExprArith 
 
-ExprArith 	: ExprArith tPlus  ExprArith  {printf("Trouvé expression arithmétique plus\n");}
-		| ExprArith tMoin  ExprArith {printf("Trouvé expression arithmétique moins\n");}
-		| ExprArith tFois  ExprArith
-		| ExprArith tDivise  ExprArith
-		| ExprArith tOu ExprArith
-		| ExprArith tEt  ExprArith
-		| ExprArith tDoubleEgal  ExprArith
-		| tId
-		| tEntier
+ExprArith 	: ExprArith tPlus ExprArith 
+            | ExprArith tMoin ExprArith 
+            | ExprArith tFois ExprArith
+            | ExprArith tDivise ExprArith
+            | ExprArith tOu ExprArith
+            | ExprArith tEt ExprArith
+            | ExprArith tDoubleEgal ExprArith
+            | tId
+            | tEntier
 
-If		: tIf tPo ExprArith tPf Body {printf("Trouvé if\n");}
-		| tIf tPo ExprArith tPf Body tElse Body
+If		    : tIf tPo ExprArith tPf Body 
+            | tIf tPo ExprArith tPf Body tElse Body
 
-While		: tWhile tPo ExprArith tPf Body {printf("Trouvé while\n");}
+While		: tWhile tPo ExprArith tPf Body 
 
-Affect		: tId tEgal ExprArith tPvir  {printf("Trouvé affectation\n");}
+Affect		: tId tEgal ExprArith tPvir 
 
-Dec		: tInt Dec1 tPvir {printf("Trouvé declaration type 1\n");}
-		| tInt DecN tPvir {printf("Trouvé declaration type 2\n");}
+Dec	        : tInt Dec1 tPvir 
+            | tInt DecN tPvir 
 
-DecN		: Dec1 {printf("trouvé DecN\n");}
-		| Dec1 tVir DecN
+DecN		: Dec1 
+            | Dec1 tVir DecN
 
-Dec1		: tId {printf ("Dec1 trouve : %s.\n", $1) ; load_variable_declaree($1) ;}
-		| tId tEgal ExprArith {printf ("Dec1 + affct trouve : %s.\n", $1) ; load_variable_declaree($1) ;}
+Dec1		: tId {load_variable_declaree($1);}
+            | tId tEgal ExprArith {load_variable_declaree($1);}
 
 %%
 
-int main(void) {
+int main(void) 
+{
 	init_table_symbole() ;
 	return yyparse();
 }
