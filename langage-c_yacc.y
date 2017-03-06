@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "table-symboles.h"
 void yyerror (char *s);
-int gLvl = 0; // variable global qui retient le niveau de profondeur
+int gLvl = 0; // variable globale qui retient le niveau de profondeur
 %}
 
 %union {int nb; char str[ID_MAX_LENGTH]; /*déclaration des types à associer aux tokens*/}
@@ -39,7 +39,7 @@ int gLvl = 0; // variable global qui retient le niveau de profondeur
 
 Start		: Prog
 
-Prog		: Fonctions {printf("Prog detected\n"); affiche_table_symboles();}
+Prog		: Fonctions {printf("Prog detected\n"); affiche_table_symboles(); affiche_code_binaire();}
 
 Fonctions	: %empty
             | Fonction Fonctions
@@ -81,7 +81,7 @@ ExprArith 	: ExprArith tPlus ExprArith
             | ExprArith tEt ExprArith
             | ExprArith tDoubleEgal ExprArith
             | tId
-            | tEntier
+            | tEntier {expr_nb($1) ;}
 
 If		    : tIf tPo ExprArith tPf Body 
             | tIf tPo ExprArith tPf Body tElse Body
@@ -96,8 +96,8 @@ Dec	        : tInt Dec1 tPvir
 DecN		: Dec1 
             | Dec1 tVir DecN
 
-Dec1		: tId {load_variable_declaree($1);}
-            | tId tEgal ExprArith {load_variable_declaree($1);}
+Dec1		: tId {memoriser_id($1);}
+            | tId tEgal ExprArith {memoriser_id($1);}
 
 %%
 

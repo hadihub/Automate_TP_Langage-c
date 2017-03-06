@@ -1,6 +1,6 @@
 int main(int a)
 {
-	if (caca == 1)
+	if (pouet == 1)
 	{
 		int A, B;
 	}

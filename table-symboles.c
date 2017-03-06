@@ -5,15 +5,13 @@
 //test de contribution
 
 static sSymbole_t symbole[TABLE_MAX_SIZE]; //ici, static = privé
-int gLvl; // variable global qui retient le niveau de profondeur
+extern int gLvl;
 
 /*************** Fonctions publiques ***************/
 
 void init_table_symbole()
 {
     int i ;
-    
-    gLvl = 0;
    
     for (i = 0; i < TABLE_MAX_SIZE ; i++)
     {
@@ -21,7 +19,25 @@ void init_table_symbole()
     }
 }
 
-int load_variable_declaree(char* id)
+//retourne -1 si non trouvé
+int get_adresse(char* id)
+{
+	int i ;
+	int trouve = 0 ; //booléen
+	int adresse_associee = -1 ;
+
+	for (i = 0; (i < TABLE_MAX_SIZE && !trouve) ; i++)
+	{
+		if (!strcmp(symbole[i].id, id))
+		{
+			adresse_associee = i ;
+			trouve = 1 ;
+		}
+	}
+	return adresse_associee ;
+}
+
+int memoriser_id(char* id)
 {
     int i, index ;
     int trouve = 0 ;
@@ -51,11 +67,11 @@ int load_variable_declaree(char* id)
 /* ajoute les variables temporaires en commençant par la fin du tableau
  * retourne 0 si tout s'est bien passé et un autre nombre sinon
  */
-int load_variable_temporaire(int num)
+int memoriser_temporaire(int num)
 {
-    if (!strcmp(symbole[TABLE_MAX_SIZE - num].id, ""))
+    if (!strcmp(symbole[TABLE_MAX_SIZE - num - 1].id, ""))
     {
-        strncpy(symbole[TABLE_MAX_SIZE - num].id, "temporaire", ID_MAX_LENGTH) ;
+        strncpy(symbole[TABLE_MAX_SIZE - num - 1].id, "temporaire", ID_MAX_LENGTH) ;
         return 0 ;
     }
     else
@@ -101,7 +117,7 @@ void affiche_table_symboles()
 
     for (i=0 ; (i < TABLE_MAX_SIZE && symbole[i].id[0] != '\0') ; i++)
     {
-        printf("#%d | lvl: %d | %s\n", i, gLvl, symbole[i].id) ;
+        printf("#%d | lvl: %d | %s\n", i, symbole[i].lvl, symbole[i].id) ;
     }
 }
 

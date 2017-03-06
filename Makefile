@@ -1,4 +1,5 @@
 CC=gcc
+CFLAGS=-g
 
 all: compilator y.output y.dot
 
@@ -9,7 +10,7 @@ lex.yy.c: langage-c_lex.l y.tab.h
 	lex langage-c_lex.l
 
 compilator: table-symboles.o traduction-asm.o lex.yy.o y.tab.o
-	$(CC) -o compilator $^
+	$(CC) -g -o compilator $^
 
 clean:
 	rm *.o

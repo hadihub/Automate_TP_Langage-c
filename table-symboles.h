@@ -14,9 +14,13 @@ typedef	struct
 
 void init_table_symbole();
 
+int get_adresse(char* id) ;
+
 // ajouter une variable à la table des symboles
 // dans un premier temps, on ne va pas implémenter la profondeur, elle sera tjrs égale à -1
-int load_variable_declaree(char* id);
+int memoriser_id(char* id);
+
+int memoriser_temporaire(int num) ;
 
 //mettre à "true" le champ init d'une variable
 void set_init(char* id);
