@@ -27,7 +27,7 @@ void set_init(char* id);
 
 //libérer une entrée de la table des symboles
 //cette fonction sera à réécrire lorsque l'on implémentera la profondeur.
-void free_symbole(int lvl);
+void fin_memorisation_symbole(int lvl);
 
 void affiche_table_symboles() ;
 

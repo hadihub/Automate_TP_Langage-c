@@ -61,7 +61,7 @@ int memoriser_id(char* id)
     strcpy(symbole[index].id, id) ;
     symbole[index].lvl = gLvl ;
 
-    return 0 ;
+    return (trouve - 1) ; //retourne 0 si on a trouvé, -1 sinon.
 }
 
 /* ajoute les variables temporaires en commençant par la fin du tableau
@@ -69,7 +69,7 @@ int memoriser_id(char* id)
  */
 int memoriser_temporaire(int num)
 {
-    if (!strcmp(symbole[TABLE_MAX_SIZE - num - 1].id, ""))
+    if ( strcmp(symbole[TABLE_MAX_SIZE - num - 1].id, "") == 0 ) //strcmp retourne 0 si le symbole vaut ""
     {
         strncpy(symbole[TABLE_MAX_SIZE - num - 1].id, "temporaire", ID_MAX_LENGTH) ;
         return 0 ;
@@ -80,6 +80,12 @@ int memoriser_temporaire(int num)
     }
     // on s'en fout des autres champs, on ne s'en servira pas :P
     //note : si temporaire n°x est utilisé, alors tous les temporaire[0,x] le sont aussi (car le compilateur se sert d'une pile). On ne peut donc pas se retrouver dans la situation où temp0 et 2 sont pris mais pas temp1
+}
+
+int fin_memorisation_temporaire(int num)
+{
+	symbole[TABLE_MAX_SIZE - num - 1].id[0] = '\0';
+	return 0 ;
 }
 
 void set_init(char* id)
@@ -97,7 +103,7 @@ void set_init(char* id)
     }	
 }
 
-//TODO : Pas supprimer par id, mais par profondeur
+//Supprimer par profondeur
 void free_symbole(int lvl)
 {
     int i;    

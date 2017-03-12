@@ -39,19 +39,19 @@ int gLvl = 0; // variable globale qui retient le niveau de profondeur
 
 Start		: Prog
 
-Prog		: Fonctions {printf("Prog detected\n"); affiche_table_symboles(); affiche_code_binaire();}
+Prog		: Fonctions {printf("Prog detected\n"); /*affiche_table_symboles();*/ affiche_code_binaire();}
 
 Fonctions	: %empty
             | Fonction Fonctions
 
 Fonction	: tInt tId tPo Args tPf Body 
 Args		: %empty
-            | tInt tId ListArgs
+            | tInt tId ListArgs	{/*memoriser_id($2);*/}
 
 ListArgs	: %empty	 
-            | tVir tInt tId ListArgs
+            | tVir tInt tId ListArgs	{/*memoriser_id($3);*/}
 
-Body		: tAo {gLvl++;} Instructions tAf {gLvl--; affiche_table_symboles(); free_symbole(gLvl+1);}
+Body		: tAo {gLvl++;} Instructions tAf {gLvl--; /*affiche_table_symboles();*/ free_symbole(gLvl+1);}
 
 Instructions	: %empty
                 | Instruction Instructions 
@@ -73,22 +73,23 @@ ListParams 	: Param
 
 Param		: ExprArith 
 
-ExprArith 	: ExprArith tPlus ExprArith 
-            | ExprArith tMoin ExprArith 
-            | ExprArith tFois ExprArith
-            | ExprArith tDivise ExprArith
-            | ExprArith tOu ExprArith
-            | ExprArith tEt ExprArith
-            | ExprArith tDoubleEgal ExprArith
-            | tId
-            | tEntier {expr_nb($1) ;}
+ExprArith 	: ExprArith tPlus ExprArith	{addition() ;}
+            | ExprArith tMoin ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | ExprArith tFois ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | ExprArith tDivise ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | ExprArith tOu ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | ExprArith tEt ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | ExprArith tDoubleEgal ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | tId	{variable_declaree($1) ;}
+            | tEntier {valeur_directe($1) ;}
+						| tPo ExprArith tPf
 
 If		    : tIf tPo ExprArith tPf Body 
             | tIf tPo ExprArith tPf Body tElse Body
 
 While		: tWhile tPo ExprArith tPf Body 
 
-Affect		: tId tEgal ExprArith tPvir 
+Affect		: tId tEgal ExprArith tPvir	{affectation($1) ;}
 
 Dec	        : tInt Dec1 tPvir 
             | tInt DecN tPvir 
@@ -96,8 +97,8 @@ Dec	        : tInt Dec1 tPvir
 DecN		: Dec1 
             | Dec1 tVir DecN
 
-Dec1		: tId {memoriser_id($1);}
-            | tId tEgal ExprArith {memoriser_id($1);}
+Dec1		: tId {memoriser_id($1) ;}
+            | tId {memoriser_id($1); /*pas sûr si c'est au bon endroit... :/*/} tEgal ExprArith {affectation($1) ;}
 
 %%
 

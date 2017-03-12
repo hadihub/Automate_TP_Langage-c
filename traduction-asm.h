@@ -21,6 +21,12 @@
 
 
 
-void expr_nb (int nb) ;
+void valeur_directe (int nb) ;
+
+void variable_declaree (char* id) ;
+
+void addition() ;
+
+void affectation(char* id) ;
 
 #endif // TRADUC_ASM_H
