@@ -39,7 +39,7 @@ int gLvl = 0; // variable globale qui retient le niveau de profondeur
 
 Start		: Prog
 
-Prog		: Fonctions {printf("Prog detected\n"); /*affiche_table_symboles();*/ affiche_code_binaire();}
+Prog		: Fonctions {printf("Prog detected\n"); /*affiche_table_symboles(); affiche_code_binaire() ;*/ export_to_file() ;}
 
 Fonctions	: %empty
             | Fonction Fonctions
@@ -74,7 +74,7 @@ ListParams 	: Param
 Param		: ExprArith 
 
 ExprArith 	: ExprArith tPlus ExprArith	{addition() ;}
-            | ExprArith tMoin ExprArith	{printf("Opération pas encore gérée\n") ;}
+            | ExprArith tMoin ExprArith	{soustraction() ;}
             | ExprArith tFois ExprArith	{printf("Opération pas encore gérée\n") ;}
             | ExprArith tDivise ExprArith	{printf("Opération pas encore gérée\n") ;}
             | ExprArith tOu ExprArith	{printf("Opération pas encore gérée\n") ;}

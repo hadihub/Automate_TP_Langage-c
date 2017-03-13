@@ -109,6 +109,36 @@ void addition() {
 }
 
 
+void soustraction() {
+	int temp ;
+
+	temp = liberer_temporaire() ;	
+	strcpy(instr[ligne_actuelle][0], "LOAD") ;
+	strcpy(instr[ligne_actuelle][1], "R1") ;
+	sprintf(instr[ligne_actuelle][2], "@%d", TABLE_MAX_SIZE - temp - 1) ;
+	ligne_actuelle ++ ;
+	
+	temp = liberer_temporaire() ;
+	strcpy(instr[ligne_actuelle][0], "LOAD") ;
+	strcpy(instr[ligne_actuelle][1], "R0") ;
+	sprintf(instr[ligne_actuelle][2], "@%d", TABLE_MAX_SIZE - temp - 1) ;
+	ligne_actuelle ++ ;
+
+	strcpy(instr[ligne_actuelle][0], "SOU") ;
+	sprintf(instr[ligne_actuelle][1], "R0") ;
+	strcpy(instr[ligne_actuelle][2], "R0") ;
+	strcpy(instr[ligne_actuelle][3], "R1") ;
+	ligne_actuelle ++ ;	
+
+	strcpy(instr[ligne_actuelle][0], "STORE") ;
+	temp = reserver_temporaire() ;
+	sprintf(instr[ligne_actuelle][1], "@%d", TABLE_MAX_SIZE - temp - 1) ; //adresse temporaire actuelle
+	strcpy(instr[ligne_actuelle][2], "R0") ; //registre 0
+	ligne_actuelle ++ ;	
+	
+}
+
+
 void affectation(char* id) {
 	int temp ;
 	int adresse_variable ;
@@ -141,4 +171,27 @@ void affiche_code_binaire()
 	{
 		printf("%s %s %s %s \n", instr[i][0], instr[i][1], instr[i][2], instr[i][3]) ;
 	}
+}
+
+void export_to_file() {
+	int i ;
+
+	printf("Exportation du code binaire vers code.asm :\n") ;
+
+	FILE *f = fopen("code.asm", "w");
+	if (f == NULL)
+	{
+	    printf("Error opening file!\n");
+	    exit(1);
+	}
+
+	for (i = 0 ; i < ligne_actuelle ; i++) {
+		fprintf(f, "%s %s %s %s \n", instr[i][0], instr[i][1], instr[i][2], instr[i][3]);
+	}
+
+	
+	fclose(f);
+
+	printf("Succès !\n") ;
+
 }

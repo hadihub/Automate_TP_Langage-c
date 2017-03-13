@@ -27,6 +27,8 @@ void variable_declaree (char* id) ;
 
 void addition() ;
 
+void soustraction() ;
+
 void affectation(char* id) ;
 
 #endif // TRADUC_ASM_H
